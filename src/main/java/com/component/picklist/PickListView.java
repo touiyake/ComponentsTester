@@ -1,4 +1,4 @@
-package com.primefaces.components;
+package com.component.picklist;
 
 import java.util.ArrayList;
 import java.util.List;

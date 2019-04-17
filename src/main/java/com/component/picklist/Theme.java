@@ -1,4 +1,4 @@
-package com.primefaces.components;
+package com.component.picklist;
 
 public class Theme {
 
