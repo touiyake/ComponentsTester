@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>DataTable</title>
+</h:head>
+<h:body>
+	<h:form id="form">
+		<p:dataTable id="dataTable" var="data" value="#{userView.users}"
+			rows="10" rowIndexVar="row" editable="true" paginator="true"
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} 
+									                 	{PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			rowsPerPageTemplate="5,10,15" paginatorPosition="bottom"
+			emptyMessage="No records found.">
+
+			<p:column headerText="Username">
+				<h:outputText value="#{data.username}" />
+			</p:column>
+
+			<p:column headerText="Email">
+				<h:outputText value="#{data.email}" />
+			</p:column>
+
+			<p:column headerText="Username">
+				<h:outputText value="#{data.status}" />
+			</p:column>
+
+			<p:column headerText="Deact." style="width:10%;text-align: center;">
+				<p:commandButton onclick="PF('dialogDeactivate').show();"
+					style="margin-right:20px;" icon="fa fa-user-times"
+					title="Deactivate" update=":form:deactDetails">
+					<f:setPropertyActionListener value="#{data}"
+						target="#{userView.selectedUser}" />
+				</p:commandButton>
+			</p:column>
+		</p:dataTable>
+
+		<p:dialog header="Back Office Account" widgetVar="dialogDeactivate"
+			height="350" width="550" modal="true" resizable="false"
+			draggable="false" closable="false" position="center top"
+			responsive="true" showEffect="fade" hideEffect="fade">
+			<p:outputPanel id="deactDetails">
+				<div class="row">
+					<div class="col-md-12">
+						<p:panelGrid columns="1" layout="grid">
+							<h:outputText value="Remarks" style="font-weight:bold;" />
+							<p:inputTextarea value="#{userView.remarks}" rows="3"
+								cols="70" />
+
+							<h:outputText value="Please input your Password:"
+								style="font-weight:bold;" />
+							<p:password value="#{userView.password}" maxlength="50" />
+						</p:panelGrid>
+					</div>
+				</div>
+				<p:separator />
+				<div class="row" style="margin-left: 5px !important;">
+					<div class="col-sm-12 col-md-3" style="padding: 2px !important;">
+						<p:commandButton value="Submit" styleClass="btn-primary btn-block"
+							actionListener="#{userView.deactivate}"
+							oncomplete="PF('dialogDeactivate').hide();" />
+					</div>
+					<div class="col-sm-12 col-md-3" style="padding: 2px !important;">
+						<p:commandButton value="Cancel" styleClass="btn-default btn-block"
+							onclick="PF('dialogDeactivate').hide();" />
+					</div>
+				</div>
+			</p:outputPanel>
+		</p:dialog>
+	</h:form>
+</h:body>
+</html>
