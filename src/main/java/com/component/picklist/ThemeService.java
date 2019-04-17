@@ -1,18 +1,24 @@
 package com.component.picklist;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ApplicationScoped;
-import javax.faces.bean.ManagedBean;
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Named;
 
-@ManagedBean(name="themeService", eager = true)
+import lombok.Getter;
+import lombok.Setter;
+
+@Named
 @ApplicationScoped
-public class ThemeService {
+@Setter
+@Getter
+public class ThemeService implements Serializable {
      
     private List<Theme> themes;
-     
+
     @PostConstruct
     public void init() {
         themes = new ArrayList<>();
@@ -25,8 +31,5 @@ public class ThemeService {
         themes.add(new Theme(6, "Luna-Pink", "luna-pink"));
         themes.add(new Theme(7, "Omega", "omega"));
     }
-     
-    public List<Theme> getThemes() {
-        return themes;
-    } 
+
 }

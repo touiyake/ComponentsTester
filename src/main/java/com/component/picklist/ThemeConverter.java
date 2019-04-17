@@ -9,7 +9,7 @@ import org.primefaces.component.picklist.PickList;
 import org.primefaces.model.DualListModel;
 
 @FacesConverter(value = "themeConverter")
-public class ThemeConverter implements Converter {
+public class ThemeConverter implements Converter<Object> {
 
 	@SuppressWarnings("unchecked")
 	@Override

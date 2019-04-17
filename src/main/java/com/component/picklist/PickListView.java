@@ -1,25 +1,26 @@
 package com.component.picklist;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
+import javax.inject.Inject;
+import javax.inject.Named;
 
-import org.primefaces.event.SelectEvent;
-import org.primefaces.event.TransferEvent;
-import org.primefaces.event.UnselectEvent;
+import org.omnifaces.cdi.ViewScoped;
 import org.primefaces.model.DualListModel;
 
-@ManagedBean
-@ViewScoped
-public class PickListView {
+import lombok.Getter;
+import lombok.Setter;
 
-	@ManagedProperty("#{themeService}")
+@Named
+@ViewScoped
+@Setter
+@Getter
+public class PickListView implements Serializable {
+
+	@Inject
 	private ThemeService service;
 
 	private DualListModel<String> cities;
@@ -47,62 +48,6 @@ public class PickListView {
 
 		themes = new DualListModel<Theme>(themesSource, themesTarget);
 
-	}
-
-	public DualListModel<String> getCities() {
-		return cities;
-	}
-
-	public void setCities(DualListModel<String> cities) {
-		this.cities = cities;
-	}
-
-	public ThemeService getService() {
-		return service;
-	}
-
-	public void setService(ThemeService service) {
-		this.service = service;
-	}
-
-	public DualListModel<Theme> getThemes() {
-		return themes;
-	}
-
-	public void setThemes(DualListModel<Theme> themes) {
-		this.themes = themes;
-	}
-
-	public void onTransfer(TransferEvent event) {
-		StringBuilder builder = new StringBuilder();
-		for (Object item : event.getItems()) {
-			builder.append(((Theme) item).getName()).append("<br />");
-		}
-
-		FacesMessage msg = new FacesMessage();
-		msg.setSeverity(FacesMessage.SEVERITY_INFO);
-		msg.setSummary("Items Transferred");
-		msg.setDetail(builder.toString());
-
-		FacesContext.getCurrentInstance().addMessage(null, msg);
-	}
-
-	public void onSelect(SelectEvent event) {
-		FacesContext context = FacesContext.getCurrentInstance();
-		context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-				"Item Selected", event.getObject().toString()));
-	}
-
-	public void onUnselect(UnselectEvent event) {
-		FacesContext context = FacesContext.getCurrentInstance();
-		context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-				"Item Unselected", event.getObject().toString()));
-	}
-
-	public void onReorder() {
-		FacesContext context = FacesContext.getCurrentInstance();
-		context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-				"List Reordered", null));
 	}
 
 }
